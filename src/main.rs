@@ -2,12 +2,21 @@ use bevy::prelude::*;
 
 fn main() {
     App::new()
-        .add_startup_system(setup)
-        .add_system(print_races)
-        .add_system(print_high_level_characters)
-        .add_system(print_low_level_characters)
-        .add_system(character_has_class)
+        .add_plugins(DefaultPlugins)
+        .add_plugin(CharacterPlugin)
         .run();
+}
+
+pub struct CharacterPlugin;
+
+impl Plugin for CharacterPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_startup_system(setup)
+            .add_system(print_races)
+            .add_system(print_high_level_characters)
+            .add_system(print_low_level_characters)
+            .add_system(character_has_class);
+    }
 }
 
 pub fn setup(mut commands: Commands) {
